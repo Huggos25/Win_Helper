@@ -1,3 +1,18 @@
+::This Startup of the code force the program open as admin
+@echo off 
+if "%PROCESSOR_ARCHITECTURE%"=="x86" if not "%PROCESSOR_ARCHITEW6432%"=="" goto :UAC_check
+
+:UAC_check
+net session >nul 2>&1
+if %errorlevel% == 0 goto :UAC_privileged
+
+echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
+"%temp%\getadmin.vbs"
+exit /B
+:UAC_privileged
+
+::After pass the request admin show a menu to choose an option
 :start
 @echo off & cls
 color d
@@ -16,6 +31,7 @@ echo + 0 - EXIT                                +
 echo +-----------------------------------------+
 set /p op= Insert an Option:
 
+::if stament that the "op" value is equal a function
 if "%op%" equ "1" (goto:op1)
 if "%op%" equ "2" (goto:op2)
 if "%op%" equ "3" (goto:op3)
@@ -25,6 +41,8 @@ if "%op%" equ "6" (goto:op6)
 if "%op%" equ "7" (goto:op7)
 if "%op%" equ "0" (goto:exit)
 
+:: This code goes to folder where all protection history of WD are saved and delete them,
+:: it s helpfull when it s full or the WD is with some bug
 :op1
 cls
 echo Delete WD Protection History 
@@ -33,6 +51,7 @@ del /S /Q *.*
 pause
 goto:start
 
+::This code search for update in softwares of the system and upgrade all 
 :op2
 cls
 echo Software Update 
@@ -41,6 +60,8 @@ winget upgrade -h --all
 pause
 goto:start
 
+::This code goes to regedit and change value of a "dword" called "ClearPageFileAtShutdown" to 1 
+::which is to when user turn off the computer it clear the cache saved
 :op3
 cls
 echo Clear PageFile Cache 
@@ -49,6 +70,9 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Mem
 pause
 goto:start
 
+::This code is the reverse of the code above make the "dword" called "ClearPageFileAtShutdown" to 0
+::return the value to 0 is important cause we don t need to clear this cache all time 
+::just when we notice a amount of space from C: disk get used to this
 :op4
 cls
 echo Reset PageFile Cache to Default 
@@ -57,9 +81,10 @@ reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Mem
 pause
 goto:start
 
+::This code works to repair disk from corrupted files and etc...
 :op5
 cls
-echo Disk Repair and Clean Temp Files 
+echo Disk Repair 
 echo Sometimes a fix it s all we need!
 chkdsk 
 sfc /scannow
@@ -69,7 +94,7 @@ dism /online /cleanup-image /restorehealth
 pause
 goto:start
 
-
+::This code works to delete temp files who occupy space in disk C:
 :op6
 cls
 echo Clean Temp Files
