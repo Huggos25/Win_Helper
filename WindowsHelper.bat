@@ -26,6 +26,7 @@ if "%op%" equ "7" (goto:op7)
 if "%op%" equ "0" (goto:exit)
 
 :op1
+cls
 echo Delete WD Protection History 
 cd C:\ProgramData\Microsoft\Windows Defender\Scans\History\Service
 del /S /Q *.* 
@@ -33,6 +34,7 @@ pause
 goto:start
 
 :op2
+cls
 echo Software Update 
 winget upgrade
 winget upgrade -h --all
@@ -40,6 +42,7 @@ pause
 goto:start
 
 :op3
+cls
 echo Clear PageFile Cache 
 echo After This Restart your computer to make effect...
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v ClearPageFileAtShutdown /t REG_DWORD /d 1
@@ -47,6 +50,7 @@ pause
 goto:start
 
 :op4
+cls
 echo Reset PageFile Cache to Default 
 echo After This Restart your computer to make effect...
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management" /v ClearPageFileAtShutdown /t REG_DWORD /d 0
@@ -54,9 +58,10 @@ pause
 goto:start
 
 :op5
+cls
 echo Disk Repair and Clean Temp Files 
 echo Sometimes a fix it s all we need!
-echo chkdsk 
+chkdsk 
 sfc /scannow
 dism /online /cleanup-image /checkhealth 
 dism /online /cleanup-image /scanhealth 
@@ -66,6 +71,7 @@ goto:start
 
 
 :op6
+cls
 echo Clean Temp Files
 Del /S /F /Q %temp%
 Del /S /F /Q %Windir%\Temp
@@ -73,6 +79,7 @@ pause
 goto:start
 
 :op7
+cls
 echo About 
 echo This is a small project done with intention to automate some tasks to help user during is work.
 echo +-------------------------------------+
