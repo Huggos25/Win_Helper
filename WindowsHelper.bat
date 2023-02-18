@@ -100,6 +100,7 @@ cls
 echo Clean Temp Files
 Del /S /F /Q %temp%
 Del /S /F /Q %Windir%\Temp
+Del /S /F /Q C:\Windows\Prefetch
 pause
 goto:start
 
