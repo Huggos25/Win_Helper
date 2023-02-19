@@ -16,6 +16,7 @@ exit /B
 :start
 @echo off & cls
 color d
+:menu
 echo For best experience recommend using it as admin
 echo +-----------------------------------------+
 echo +               Main Menu                 +
@@ -26,10 +27,23 @@ echo + 3 - Clear PageFile Cache                +
 echo + 4 - Reset PageFile Cache to Default     +
 echo + 5 - Disk Repair                         + 
 echo + 6 - Clean Temp Files                    +
-echo + 7 - About                               +
+echo + 7 - Clean Nvidia Cache and D3DSCache    +
+echo + 8 - About                               +
 echo + 0 - EXIT                                +
 echo +-----------------------------------------+
 set /p op= Insert an Option:
+
+::This code is first wall to make sure the program not crash
+::first it check if the "value" is null if it, the code will return to the start
+::second it remove the spaces in the user input 
+::third check if the "value" is defined if not return start
+::fourth check if input is lower than 0 "lss"
+::fifth  check if input is greater than or equal than 9 "geq"
+if "%op%" == "" goto start
+set "op=%op: =%"
+if not defined op goto start
+if %op% lss 0 goto start
+if %op% geq 9 goto start 
 
 ::if stament that the "op" value is equal a function
 if "%op%" equ "1" (goto:op1)
@@ -39,6 +53,7 @@ if "%op%" equ "4" (goto:op4)
 if "%op%" equ "5" (goto:op5)
 if "%op%" equ "6" (goto:op6)
 if "%op%" equ "7" (goto:op7)
+if "%op%" equ "8" (goto:op8)
 if "%op%" equ "0" (goto:exit)
 
 :: This code goes to folder where all protection history of WD are saved and delete them,
@@ -101,10 +116,26 @@ echo Clean Temp Files
 Del /S /F /Q %temp%
 Del /S /F /Q %Windir%\Temp
 Del /S /F /Q C:\Windows\Prefetch
+echo y | Del /S /F /Q C:\Windows\SoftwareDistribution\Download
+ipconfig /flushdns
+start C:\Windows\System32\WSReset.exe
+pause
+taskkill /F /IM WinStore.App.exe
+goto:start
+
+::This code works to delete cache files from Nvidia and D3DSCache
+:op7
+cls
+echo Clean Nvidia Cache and D3DSCache
+echo most of the process will not be deleted cause they are in use...
+echo y | Del /S /F /Q %localappdata%\NVIDIA\DXCache
+echo y | Del /S /F /Q %localappdata%\NVIDIA\GLCache
+echo y | Del /S /F /Q C:\ProgramData\NVIDIA
 pause
 goto:start
 
-:op7
+
+:op8
 cls
 echo About 
 echo This is a small project done with intention to automate some tasks to help user during is work.
