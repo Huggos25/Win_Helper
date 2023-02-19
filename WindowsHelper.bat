@@ -16,7 +16,6 @@ exit /B
 :start
 @echo off & cls
 color d
-:menu
 echo For best experience recommend using it as admin
 echo +-----------------------------------------+
 echo +               Main Menu                 +
