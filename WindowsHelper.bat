@@ -100,11 +100,25 @@ goto:start
 cls
 echo Disk Repair 
 echo Sometimes a fix it s all we need!
-chkdsk 
+
+echo Running chkdsk on C:
+chkdsk C: /f /r
+
+echo Running chkdsk on D:
+chkdsk D: /f /r
+
+echo Running sfc /scannow
 sfc /scannow
-dism /online /cleanup-image /checkhealth 
-dism /online /cleanup-image /scanhealth 
-dism /online /cleanup-image /restorehealth 
+
+echo Running dism /online /cleanup-image /checkhealth
+dism /online /cleanup-image /checkhealth
+
+echo Running dism /online /cleanup-image /scanhealth
+dism /online /cleanup-image /scanhealth
+
+echo Running dism /online /cleanup-image /restorehealth
+dism /online /cleanup-image /restorehealth
+
 pause
 goto:start
 
