@@ -104,9 +104,6 @@ echo Sometimes a fix it s all we need!
 echo Running chkdsk on C:
 chkdsk C: /f /r
 
-echo Running chkdsk on D:
-chkdsk D: /f /r
-
 echo Running sfc /scannow
 sfc /scannow
 
