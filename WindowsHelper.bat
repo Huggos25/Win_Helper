@@ -144,7 +144,6 @@ echo y | Del /S /F /Q C:\ProgramData\NVIDIA
 pause
 goto:start
 
-
 :op8
 cls
 echo About 
@@ -154,7 +153,6 @@ echo + Made by https://github.com/Huggos25 +
 echo +-------------------------------------+
 pause
 goto:start
-
 
 :exit
 exit
