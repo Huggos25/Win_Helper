@@ -141,6 +141,8 @@ echo most of the process will not be deleted cause they are in use...
 echo y | Del /S /F /Q %localappdata%\NVIDIA\DXCache
 echo y | Del /S /F /Q %localappdata%\NVIDIA\GLCache
 echo y | Del /S /F /Q C:\ProgramData\NVIDIA
+echo y | Del /S /F /Q %localappdata%\D3DSCache
+
 pause
 goto:start
 
@@ -156,3 +158,4 @@ goto:start
 
 :exit
 exit
+
